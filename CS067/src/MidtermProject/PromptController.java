@@ -7,6 +7,8 @@ package MidtermProject;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -14,9 +16,6 @@ import java.util.Scanner;
  * 
  */
 public class PromptController {
-	public PromptController() {
-		
-	}
 
 	/**
 	 * Prompts the user to enter information that can be used to create a new Task object
@@ -90,6 +89,32 @@ public class PromptController {
 		in.close();
 	
 		return p;
+	}
+	
+	public String promptSort() {
+		Scanner in = new Scanner(System.in);
+		String rVal = "";
+		// found out how to do below code here: 
+		// https://howtodoinjava.com/java/collections/arraylist/add-multiple-elements-arraylist/
+		ArrayList<String> validInputs = 
+				new ArrayList<>(Arrays.asList("C", "D", "N", "DD", "PN", "A", "R", "I"));
+		do {
+			System.out.println("How do you wish to sort the task list?\n"
+					+ "C - Sort by Complete\n"
+					+ "TD - Sort by Description\n"
+					+ "N - Sort by Task Name\n"
+					+ "DD - Sort by Due Date\n"
+					+ "PN - Sort by Person Name\n"
+					+ "A - Sort by Person Age\n"
+					+ "R - Sort by Relation to Person\n"
+					+ "I - Invert current sorting order");
+			rVal = in.next().toUpperCase();
+			if(!validInputs.contains(rVal)) {
+				System.out.println("Invalid input. Try again.");
+			}
+		} while(!validInputs.contains(rVal));
+		
+		return rVal;
 	}
 	
 }

@@ -12,12 +12,12 @@ import java.time.LocalDate;
  */
 public class Task {
 	
-	private String name;
-	private String description;
-	private boolean complete;
-	private LocalDate dueDate;
-	private Person person;
-	
+	private String name;			// Name of Task (label)
+	private String description;	// Description of what task entails
+	private boolean complete;	// Boolean keeping track of if task is complete
+	private LocalDate dueDate;	// Due Date of task
+	private Person person;		// Person involved with task
+		
 	// Constructors
 	
 	Task() {
@@ -63,10 +63,31 @@ public class Task {
 	public String toString() {
 		
 		String rVal = "";
-			rVal = getName() + " | " + printComplete() + "\n" + getDescription() + "\n" + getPerson().toPrint();
+			rVal = getName() + " | " + printComplete() + "\n" + getDescription() + "\n";
 			if(hasDueDate()) {
 				rVal += " " + getDueDate().toString();
 			}
+			if(hasPerson()) {
+				rVal += " " + getPerson().toString();
+			}
+		return rVal;
+	}
+	
+	
+	/**
+	 * Returns a short string representing a task
+	 */
+	public String shortToString() {
+		String rVal = "";
+		rVal += getName() + " | ";
+		if(hasDueDate()) {
+			rVal += getDueDate().toString() + " | ";
+		}
+		if(hasPerson()) {
+			rVal += getPerson().toPrint()+ " | ";
+		}
+		rVal += printComplete();
+		
 		return rVal;
 	}
 	
@@ -94,13 +115,12 @@ public class Task {
 		return description;
 	}
 	
+	
 	/**
 	 * @return - Boolean value representing completeness of task - true if complete, false otherwise
 	 */
-	public boolean getComplete() {
-		if(complete)
-			return true;
-		return false;
+	public boolean isComplete() {
+		return complete;
 	}
 	
 	/**
@@ -118,8 +138,18 @@ public class Task {
 		return getDueDate() != null;
 	}
 	
+	/**
+	 * @return - Person object associated with this task
+	 */
 	public Person getPerson() {
 		return this.person;
+	}
+	
+	/**
+	 * @return - True if this task has a person associated with it, false otherwise
+	 */
+	public boolean hasPerson() {
+		return(getPerson() != null);
 	}
 
 }

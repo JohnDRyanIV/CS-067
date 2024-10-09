@@ -14,7 +14,7 @@ class CompleteComparator implements Comparator<Task> {
 	 * Sorts tasks based on if they are complete or not
 	 */
 	public int compare(Task o1, Task o2) {
-		return Boolean.compare(o1.getComplete(), o2.getComplete());
+		return Boolean.compare(o1.isComplete(), o2.isComplete());
 	}
 }
 
@@ -35,7 +35,7 @@ class NameComparator implements Comparator<Task> {
 	 * Sorts tasks based on their name, ascending
 	 */
 	public int compare(Task o1, Task o2) {
-		return o1.getName().compareTo(o2.getName());
+		return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
 	}
 	
 }
@@ -59,57 +59,65 @@ class DueDateComparator implements Comparator<Task> {
 	}
 }
 	
-class PersonNameComparator implements Comparator<Person> {
+class PersonNameComparator implements Comparator<Task> {
 	@Override
 	/**
 	 * Sorts tasks based on the name of person
 	 */
-	public int compare(Person o1, Person o2) {
-		if(o1 != null && o2 != null) {
-			return o1.getName().compareTo(o2.getName());
+	public int compare(Task o1, Task o2) {
+		Person p1 = o1.getPerson();
+		Person p2 = o2.getPerson();
+		if(p1 != null && p2 != null) {
+			return p1.getName().toLowerCase().compareTo
+					(p2.getName().toLowerCase());
 		}
-		else if (o1 == null && o2 == null) {
+		else if (p1 == null && p2 == null) {
 			return 0;
 		}
-		else if (o1 == null && o2 != null) {
+		else if (p1 == null && p2 != null) {
 			return -1;
 		}
 		return 1; // TODO TODO TODO TODO 
 	}
 }
 	
-class AgeComparator implements Comparator<Person> {
+class AgeComparator implements Comparator<Task> {
 	@Override
 	/**
 	 * Sorts tasks based on the age of the 
 	 */
-	public int compare(Person o1, Person o2) {
-		if(o1 != null && o2 != null) {
-			return Integer.valueOf(o1.getAge()).compareTo(Integer.valueOf(o2.getAge()));
+	public int compare(Task o1, Task o2) {
+		Person p1 = o1.getPerson();
+		Person p2 = o2.getPerson();
+		if(p1 != null && p2 != null) {
+			return Integer.valueOf(p1.getAge()).compareTo
+					(Integer.valueOf(p2.getAge()));
 		}
-		else if (o1 == null && o2 == null) {
+		else if (p1 == null && p2 == null) {
 			return 0;
 		}
-		else if(o1 == null && o2 != null) {
+		else if(p1 == null && p2 != null) {
 			return -1;
 		}
 		return 1; // TODO TODO TODO TODO 
 	}
 }
 
-class RelationComparator implements Comparator<Person> {
+class RelationComparator implements Comparator<Task> {
 	@Override
 	/**
 	 * Sorts tasks based on the relationship to the person
 	 */
-	public int compare(Person o1, Person o2) {
-		if(o1 != null && o2 != null) {
-			return o1.getRelation().compareTo(o2.getRelation());
+	public int compare(Task o1, Task o2) {
+		Person p1 = o1.getPerson();
+		Person p2 = o2.getPerson();
+		if(p1 != null && p2 != null) {
+			return p1.getRelation().compareTo(p2.getRelation());
 		}
-		else if (o1 == null && o2 == null) {
+		else if (p1 == null && p2 == null) {
 			return 0;
 		}
-		else if (o1 == null && o2 != null) {
+		else if (p1 == null && p2 != null) {
 			return -1;
 		}
 		return 1; // TODO TODO TODO TODO 

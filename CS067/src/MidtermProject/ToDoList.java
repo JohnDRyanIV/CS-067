@@ -41,9 +41,6 @@ public class ToDoList {
 		tasks.add(newTask);
 	}
 	
-	// Prompts user to enter task then adds task to the list
-	
-	
 	/**
 	 * Reverses order of list. This can be useful for changing from ascending to descending sort
 	 */
@@ -56,6 +53,33 @@ public class ToDoList {
 		Scanner in = new Scanner(System.in);
 		
 		in.close();
+	}
+	
+	public ArrayList<Task> getTasks() {
+		return tasks;
+	}
+	
+	/**public String listCompleteTasks() {
+		String rVal = "";
+		int i = 1;	// Outputs the task to be selected
+		for(Task t : tasks) {
+			if(t.isComplete()) {
+				rVal += String.valueOf(i) + ": ";
+				rVal +=  
+			}
+			i++;
+		}
+	}*/
+	
+	public String shortToString() {
+		int taskNum = 1;
+		String rVal = "";
+		for(Task t : tasks) {
+			rVal += String.valueOf(taskNum) + ": " + t.shortToString() + "\n";
+			taskNum++;
+		}
+		
+		return rVal;
 	}
 
 }
