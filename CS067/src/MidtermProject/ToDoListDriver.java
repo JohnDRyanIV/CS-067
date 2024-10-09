@@ -148,9 +148,15 @@ public class ToDoListDriver {
 		allTasks.add(task5);
 		allTasks.add(task6);
 		
-		ToDoList todo = new ToDoList(allTasks);
+		ArrayList<Person> allPeople = new ArrayList<Person>();
+		allPeople.add(person1);
+		allPeople.add(person2);
+		allPeople.add(person3);
 		
-		return todo;
+		
+		ToDoList toDo = new ToDoList(allTasks, allPeople);
+		
+		return toDo;
 		
 		
 	}

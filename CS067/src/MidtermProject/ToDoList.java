@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class ToDoList {
 	
 	private ArrayList<Task> tasks;
+	private ArrayList<Person> people;
 	
 	public ToDoList() {
 		tasks = new ArrayList<Task>();
@@ -22,6 +23,11 @@ public class ToDoList {
 	
 	public ToDoList(ArrayList<Task> tasks) {
 		this.tasks = tasks;
+	}
+	
+	public ToDoList(ArrayList<Task> tasks, ArrayList<Person> people) {
+		this.tasks = tasks;
+		this.people = people;
 	}
 	
 	public String toString() {
@@ -53,6 +59,10 @@ public class ToDoList {
 		Scanner in = new Scanner(System.in);
 		
 		in.close();
+	}
+	
+	public Task getTask(int i) {
+		return null;   // TODO TODO TODO TODO  TODO 
 	}
 	
 	public ArrayList<Task> getTasks() {
