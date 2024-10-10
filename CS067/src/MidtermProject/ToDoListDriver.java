@@ -60,7 +60,7 @@ public class ToDoListDriver {
 			// Change completion status of task
 			else if (tempInput.equalsIgnoreCase("T")) {
 				System.out.println(toDo.listAllTasks());
-				System.out.println("Select which number task you want deleted: " );
+				System.out.println("Select which number task you want to toggle completion of: " );
 				tempIntInput = in.nextInt() - 1;		// subtracted by 1 cause user is shown list from 1-size
 													// whereas actual valid indices are 0-(size - 1)
 				while(!toDo.isValidTaskSelect(tempIntInput)) {
@@ -74,7 +74,7 @@ public class ToDoListDriver {
 			// Delete a task
 			else if (tempInput.equalsIgnoreCase("DT")) {
 				System.out.println(toDo.listAllTasks());
-				System.out.println("Select which number task you want to swap completion of: " );
+				System.out.println("Select which number task you want to delete: " );
 				tempIntInput = in.nextInt() - 1;		// subtracted by 1 cause user is shown list from 1-size
 													// whereas actual valid indices are 0-(size - 1)
 				while(!toDo.isValidTaskSelect(tempIntInput)) {
