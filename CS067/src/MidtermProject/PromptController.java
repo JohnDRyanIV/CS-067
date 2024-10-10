@@ -67,43 +67,67 @@ public class PromptController {
 		}
 		
 		tempInput = "";
-		// Enter person either from existing list or create new person
-		if(todo.getNumPeople() > 0) { // Check to see if there exist people in persons list to choose from
-			System.out.println("Do you want to use an existing person (y/n)?");
-			tempInput = in.nextLine();
-			if(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
-				while(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
-					System.out.println("Invalid input. Try again.");
-					tempInput = in.nextLine();
-				}
-			}	
-		}
-		// If person list is empty, manually set tempinput to n so user will be prompted to enter new person
-		else {
-			tempInput = "n";
-		}
-		// If yes, then get list of existing people and choose which one to add
-		if(tempInput.equalsIgnoreCase("y")) {
-			System.out.println(todo.listAllPeople());
-
-			System.out.println("Select a person: ");
-			tempInt = in.nextInt() - 1;
-			// Input validation
-			while(!todo.isValidPersonSelect(tempInt)) {
-				System.out.println("Invalid input. Try again");
-				tempInt = in.nextInt() - 1;
+		// Input for if user wants to add person
+		System.out.println("Do you want to add a person (y/n)?: ");
+		tempInput = in.nextLine();
+		if(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
+			while(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
+				System.out.println("Invalid input. Try again.");
+				tempInput = in.nextLine();
 			}
-			p = todo.getPerson(tempInt);		
-		}
-		// If no or no users, prompt user to manually add a person
-		else {
-			p = promptPerson(in, todo);
+		}	
+		// If user wants to add person
+		if(tempInput.equalsIgnoreCase("y")) {
+			tempInput = "";
+			// Enter person either from existing list or create new person
+			if(todo.getNumPeople() > 0) { // Check to see if there exist people in persons list to choose from
+				System.out.println("Do you want to use an existing person (y/n)?");
+				tempInput = in.nextLine();
+				if(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
+					while(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
+						System.out.println("Invalid input. Try again.");
+						tempInput = in.nextLine();
+					}
+				}	
+			}
+			// If person list is empty, manually set tempinput to n so user will be prompted to enter new person
+			else {
+				tempInput = "n";
+			}
+			// If yes, then get list of existing people and choose which one to add
+			if(tempInput.equalsIgnoreCase("y")) {
+				System.out.println(todo.listAllPeople());
+
+				System.out.println("Select a person: ");
+				tempInt = in.nextInt() - 1;
+				// Input validation
+				while(!todo.isValidPersonSelect(tempInt)) {
+					System.out.println("Invalid input. Try again");
+					tempInt = in.nextInt() - 1;
+				}
+				p = todo.getPerson(tempInt);		
+			}
+			// If no or no users, prompt user to manually add a person
+			else {
+				p = promptPerson(in, todo);
+			}
+			
+			todo.addPerson(p);
 		}
 		
-		if(taskDueDate != null) {
+		
+		if(taskDueDate != null && p != null) {
 			rTask = new Task(taskName, taskDescription, taskDueDate, p);
 		}
-		rTask = new Task(taskName, taskDescription, p);	
+		else if(taskDueDate != null) {
+			rTask = new Task(taskName, taskDescription, taskDueDate);
+		}
+		else if(p != null) {
+			rTask = new Task(taskName, taskDescription, p);
+		}
+		else {
+			rTask = new Task(taskName, taskDescription);
+		}
 		
 		return rTask;
 	}
@@ -120,15 +144,17 @@ public class PromptController {
 			
 		System.out.println("Enter name of person: ");
 		personName = in.nextLine();
+		System.out.println("Enter relation to person: ");
+		personRelation = in.nextLine();
 		while(personAge < 0) {
 			System.out.println("Enter age of person: ");
 			personAge = in.nextInt();
 			if(personAge < 0) {
-				System.out.println("Invalid input. Age must be positive and entered as number.");
+				System.out.println("Error. Age must be above 0");
 			}
-		} 
-		System.out.println("Enter relation to person: ");
-		personRelation = in.nextLine();
+		
+		}
+
 			
 		Person p = new Person(personAge, personName, personRelation);
 		

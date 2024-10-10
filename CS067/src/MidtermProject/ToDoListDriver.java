@@ -31,7 +31,7 @@ public class ToDoListDriver {
 		
 		toDo = sl.loadToDoList();
 		
-		
+		// Loop that deals with user input
 		do {
 			
 			System.out.println(toDo.shortToString());
@@ -44,7 +44,7 @@ public class ToDoListDriver {
 					+ "C - View Complete Tasks\n"
 					+ "I - View Incomplete Tasks\n"
 					+ "V - View People\n"
-					+ " or z to end the program: ");
+					+ "Z - End the Program");
 			tempInput = in.nextLine();
 			// Add a task
 			if(tempInput.equalsIgnoreCase("A")) {
@@ -130,6 +130,7 @@ public class ToDoListDriver {
 		} while(!tempInput.equals(sentinelValue));
 		
 		in.close();
+		// Print out final output for user to keep on person
 		System.out.println(toDo.longToString());
 		System.out.println("Restart program to access ToDoList");
 
