@@ -99,17 +99,17 @@ public class ToDoList {
 	 * @return - string of all completed tasks in short-form
 	 */
 	public String listCompleteTasks() {
-		String rVal = "";
+		String rVal = "------Complete Tasks------\n";
 		int i = 1;	// Outputs the number of task on the completed list this is
 		for(Task t : tasks) {
 			if(t.isComplete()) {
 				rVal += String.valueOf(i) + ": ";
-				rVal += t.shortToString();
+				rVal += t.shortToString() + "\n";
 				i++;
 			}
 
 		}
-		
+		rVal += "------Complete Tasks------\n";
 		return rVal;
 	}
 	
@@ -117,15 +117,16 @@ public class ToDoList {
 	 * @return - String of all incomplete tasks in short-form
 	 */
 	public String listIncompleteTasks() {
-		String rVal = "";
+		String rVal = "------Incomplete Tasks------\n";
 		int i = 1;	// Outputs the number of task on the incomplete list this is
 		for(Task t : tasks) {
 			if(!t.isComplete()) {
-				rVal += String.valueOf(i) + ": " + t.shortToString();
+				rVal += String.valueOf(i) + ": " + t.shortToString() + "\n";
 				i++;
 			}
 
 		}
+		rVal += "------Incomplete Tasks------";
 		
 		return rVal;
 	}
@@ -219,7 +220,7 @@ public class ToDoList {
 		int taskNum = 1;
 		String rVal = "List of Tasks:\n";
 		for(Task t : tasks) {
-			rVal += String.valueOf(taskNum) + t + "\n";
+			rVal += String.valueOf(taskNum) + ": " + t + "\n";
 			taskNum++;
 		}
 		

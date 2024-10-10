@@ -35,6 +35,7 @@ public class ToDoListDriver {
 		do {
 			
 			System.out.println(toDo.shortToString());
+			System.out.println("-------------------------------------------------\n");
 			System.out.println("Enter the following:\n"
 					+ "A - Add a Task\n"
 					+ "P - Add a Person\n"

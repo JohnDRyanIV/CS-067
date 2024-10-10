@@ -63,7 +63,7 @@ public class Task {
 	public String toString() {
 		
 		String rVal = "";
-		rVal = getName() + " | " + getDescription() + " | ";
+		rVal = getName() + " | ";
 		if(hasDueDate()) {
 			rVal += getDueDate().toString() + " | ";
 		}
