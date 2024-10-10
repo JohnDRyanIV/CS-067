@@ -21,8 +21,8 @@ public class Task {
 	// Constructors
 	
 	Task() {
-		name = "epic";
-		description = "epic";
+		name = "Generic Task";
+		description = "Generic Description";
 		complete = false;
 		dueDate = null;
 		person = null;
@@ -71,6 +71,10 @@ public class Task {
 				rVal += " " + getPerson().toString();
 			}
 		return rVal;
+	}
+	
+	public void toggleComplete() {
+		complete = !complete;
 	}
 	
 	

@@ -21,8 +21,7 @@ public class PromptController {
 	 * Prompts the user to enter information that can be used to create a new Task object
 	 * @return
 	 */
-	public Task promptTask() {
-		Scanner in = new Scanner(System.in);
+	public Task promptTask(Scanner in) {
 		String taskName = "";
 		String taskDescription = "";
 		String dueDateHolder = "";
@@ -35,7 +34,8 @@ public class PromptController {
 		
 		System.out.println("Enter date of task (yyyy-mmm-dd), or press enter for no date: ");
 		dueDateHolder = in.next();
-		while(dueDateHolder != "") {
+		
+		while(taskDueDate == null) {
 			try {
 				// following code found here: https://stackoverflow.com/questions/8746084/string-to-localdate
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
@@ -48,15 +48,13 @@ public class PromptController {
 			}
 		}
 
-		Person p = promptPerson();
+		Person p = promptPerson(in);
 		
 		if(taskDueDate != null) {
 			//TODO implement date finder
 			Task t = new Task(taskName, taskDescription, taskDueDate, p);
 		}
 		Task t = new Task(taskName, taskDescription, p);	
-		
-		in.close();
 		
 		return t;
 	}
@@ -65,8 +63,7 @@ public class PromptController {
 	 * Prompts the user to enter information that can be used to make a new person object
 	 * @return
 	 */
-	public Person promptPerson() {
-		Scanner in = new Scanner(System.in);
+	public Person promptPerson(Scanner in) {
 		
 		String personName = "";
 		int personAge = -1;
@@ -85,14 +82,11 @@ public class PromptController {
 		personRelation = in.next();
 		
 		Person p = new Person(personAge, personName, personRelation);
-		
-		in.close();
-	
+			
 		return p;
 	}
 	
-	public String promptSort() {
-		Scanner in = new Scanner(System.in);
+	public String promptSort(Scanner in) {
 		String rVal = "";
 		// found out how to do below code here: 
 		// https://howtodoinjava.com/java/collections/arraylist/add-multiple-elements-arraylist/

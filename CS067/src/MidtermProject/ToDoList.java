@@ -47,6 +47,10 @@ public class ToDoList {
 		tasks.add(newTask);
 	}
 	
+	public void addPerson(Person newPerson) {
+		people.add(newPerson);
+	}
+	
 	/**
 	 * Reverses order of list. This can be useful for changing from ascending to descending sort
 	 */
@@ -54,11 +58,9 @@ public class ToDoList {
 		Collections.reverse(tasks);
 	}
 	
-	public void removeTask() {
+	public void removeTask(int i) {
 		// TODO order all tasks with num next to them representing index of task list that task is in
-		Scanner in = new Scanner(System.in);
-		
-		in.close();
+		tasks.remove(i);
 	}
 	
 	public Task getTask(int i) {
@@ -69,17 +71,80 @@ public class ToDoList {
 		return tasks;
 	}
 	
-	/**public String listCompleteTasks() {
+	public String listCompleteTasks() {
 		String rVal = "";
-		int i = 1;	// Outputs the task to be selected
+		int i = 1;	// Outputs the number of task on the completed list this is
 		for(Task t : tasks) {
 			if(t.isComplete()) {
 				rVal += String.valueOf(i) + ": ";
-				rVal +=  
+				rVal += t.shortToString();
+				i++;
 			}
+
+		}
+		
+		return rVal;
+	}
+	
+	public String listIncompleteTasks() {
+		String rVal = "";
+		int i = 1;	// Outputs the number of task on the incomplete list this is
+		for(Task t : tasks) {
+			if(!t.isComplete()) {
+				rVal += String.valueOf(i) + ": " + t.shortToString();
+				i++;
+			}
+
+		}
+		
+		return rVal;
+	}
+	
+	public String listAllTasks() {
+		String rVal = "";
+		int i = 1;
+		for(Task t : tasks) {
+			rVal += String.valueOf(i) + ": " + t.shortToString() + "\n";
 			i++;
 		}
-	}*/
+		
+		return rVal;
+	}
+	
+	public String listAllPeople() {
+		String rVal = "";
+		int i = 1;
+		for(Person p : people) {
+			rVal += String.valueOf(i) + ": " + p.toString() + "\n";
+			i++;
+		}
+		
+		return rVal;
+	}
+	
+	public int getNumTasks() {
+		return tasks.size();
+	}
+	
+	public int getNumPeople() {
+		return people.size();
+	}
+	
+	public boolean isValidTaskSelect(int taskNum) {		
+		if(taskNum > -1 && taskNum < tasks.size()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isValidPersonSelect(int personNum) {
+		if(personNum > -1 && personNum < people.size()) {
+			return true;
+		}
+		return false;
+		
+	}
+	
 	
 	public String shortToString() {
 		int taskNum = 1;

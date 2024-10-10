@@ -38,7 +38,7 @@ public class Save_Load {
 		
 	}
 	
-	public ToDoList loadToDoList(ToDoList toDo) {
+	public ToDoList loadToDoList() {
 		
 		Gson gson = new GsonBuilder()
 			    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())

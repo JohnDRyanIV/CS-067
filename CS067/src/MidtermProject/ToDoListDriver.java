@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,163 +22,132 @@ import com.google.gson.GsonBuilder;
 public class ToDoListDriver {
 	
 	public static void main(String[] args) {
+
+		int tempIntInput = -1;
+		
 		String sentinelValue = "z";							// Value to end the input loop
 		String tempInput = "";								// Value to hold current user input
-		String sortInput = "";
+		String sortInput = "";								// value to hold current user sort input
+		
 		Scanner in = new Scanner(System.in);					// Scanner to scan for current user input
-		PromptController prompt = new PromptController();		// Handles getting input frmo user
+		
+		PromptController prompt = new PromptController();		// Handles getting some input from user
+		
 		Task currentTask = null;								// Current task to be added to ToDoList
 		Person currentPerson = null;							// Current person to be added to PersonList
 		ToDoList toDo = null;
-		ArrayList<Person> people = new ArrayList<Person>();
+		Save_Load sl = new Save_Load();						// Handles saving/loading todolist
+
+		
+		
 		/**
 		 * Might implement below for file reading/writing
 		 * Scanner file = new Scanner(-FILEPATH-);
 		 */
 		
-		toDo = testPopulate();
+		//toDo = testPopulate();
+		
+		toDo = sl.loadToDoList();
 		
 		
-		
-		/**do {
+		do {
 			
 			System.out.println(toDo.shortToString());
 			System.out.println("Enter the following:\n"
 					+ "A - Add a Task\n"
 					+ "P - Add a Person\n"
-					+ "D - Delete a Task\n"
+					+ "T - Toggle Task Completion\n"
+					+ "DT - Delete a Task\n"
 					+ "S - Sort Task List\n"
 					+ "C - View Complete Tasks\n"
 					+ "I - View Incomplete Tasks\n"
+					+ "V - View People\n"
 					+ " or z to end the program: ");
 			tempInput = in.next();
-			if(tempInput.equalsIgnoreCase("a")) {
-				toDo.addTask(prompt.promptTask());
+			// Add a task
+			if(tempInput.equalsIgnoreCase("A")) {
+				toDo.addTask(prompt.promptTask(in));
+				sl.saveToDoList(toDo);
 			}
-			else if (tempInput.equalsIgnoreCase("p")) {
-				people.add(prompt.promptPerson());
+			// Add a person
+			else if (tempInput.equalsIgnoreCase("P")) {
+				toDo.addPerson(prompt.promptPerson(in));
 			}
-			else if (tempInput.equalsIgnoreCase("d")) {
-				// TODO delete task
+			// Change completion status of task
+			else if (tempInput.equalsIgnoreCase("T")) {
+				System.out.println(toDo.listAllTasks());
+				System.out.println("Select which number task you want deleted: " );
+				tempIntInput = in.nextInt() - 1;		// subtracted by 1 cause user is shown list from 1-size
+													// whereas actual valid indices are 0-(size - 1)
+				while(!toDo.isValidTaskSelect(tempIntInput)) {
+					System.out.println("Invalid input. Try again.");
+					tempIntInput = in.nextInt() - 1;
+				}
+				toDo.removeTask(tempIntInput);
+				sl.saveToDoList(toDo);
 			}
-			else if (tempInput.equalsIgnoreCase("s")) {
-				sortInput = prompt.promptSort();
-				if(sortInput.equals("C")) {
-					
+			// Delete a task
+			else if (tempInput.equalsIgnoreCase("DT")) {
+				System.out.println(toDo.listAllTasks());
+				System.out.println("Select which number task you want deleted: " );
+				tempIntInput = in.nextInt() - 1;		// subtracted by 1 cause user is shown list from 1-size
+													// whereas actual valid indices are 0-(size - 1)
+				while(!toDo.isValidTaskSelect(tempIntInput)) {
+					System.out.println("Invalid input. Try again.");
+					tempIntInput = in.nextInt() - 1;
 				}
-				else if(sortInput.equals("D")) {
-					
+				toDo.removeTask(tempIntInput);
+				sl.saveToDoList(toDo);
+			}
+			// Sort task list
+			else if (tempInput.equalsIgnoreCase("S")) {
+				sortInput = prompt.promptSort(in);
+				if(sortInput.equals("C")) {	// Sort by complete
+					Collections.sort(toDo.getTasks(), new CompleteComparator());
 				}
-				else if(sortInput.equals("N")) {
-					
+				else if(sortInput.equals("D")) { // Sort by description
+					Collections.sort(toDo.getTasks(), new DescriptionComparator());
 				}
-				else if(sortInput.equals("DD")) {
-					
+				else if(sortInput.equals("N")) { // Sort by task name
+					Collections.sort(toDo.getTasks(), new NameComparator());
 				}
-				else if(sortInput.equals("PN")) {
-					
+				else if(sortInput.equals("DD")) { // Sort by due date
+					Collections.sort(toDo.getTasks(), new DueDateComparator());
 				}
-				else if(sortInput.equals("A")) {
-					
+				else if(sortInput.equals("PN")) { // Sort by person name
+					Collections.sort(toDo.getTasks(), new PersonNameComparator());
 				}
-				else if(sortInput.equals("R")) {
-					
+				else if(sortInput.equals("A")) { // Sort by person age
+					Collections.sort(toDo.getTasks(), new AgeComparator());
 				}
-				else if(sortInput.equals("I")) {
+				else if(sortInput.equals("R")) { // Sort by relation to person
+					Collections.sort(toDo.getTasks(), new RelationComparator());
+				}
+				else if(sortInput.equals("I")) { // Invert current sorting order
 					toDo.reverseOrder();
 				}
 			}
-			else if (tempInput.equalsIgnoreCase("c")) {
-				// TODO view complete tasks
+			// View complete tasks
+			else if (tempInput.equalsIgnoreCase("C")) {
+				System.out.println(toDo.listCompleteTasks());
 			}
-			else if (tempInput.equalsIgnoreCase("i")) {
-				// TODO view incompelete tasks
+			// View iocomplete tasks
+			else if (tempInput.equalsIgnoreCase("I")) {
+				System.out.println(toDo.listIncompleteTasks());
 			}
-			else if(!tempInput.equalsIgnoreCase("z")) {
+			// View all people
+			else if(tempInput.equalsIgnoreCase("V")) {
+				System.out.println(toDo.listAllPeople());
+			}
+			else if(!tempInput.equalsIgnoreCase("Z")) {
 				System.out.println("Invalid input. Try again.");
 			}
 			
-		} while(tempInput != sentinelValue);*/
+		} while(!tempInput.equals(sentinelValue));
 		
 		in.close();
-		
-		
-		System.out.println(toDo.shortToString());
-		Collections.sort(toDo.getTasks(), new CompleteComparator());
-		System.out.println(toDo.shortToString());
-
-		Collections.sort(toDo.getTasks(), new DescriptionComparator());
-		System.out.println(toDo.shortToString());
-
-		Collections.sort(toDo.getTasks(), new NameComparator());
-		System.out.println(toDo.shortToString());
-
-		Collections.sort(toDo.getTasks(), new DueDateComparator());
-		System.out.println(toDo.shortToString());
-		
-		Collections.sort(toDo.getTasks(), new PersonNameComparator());
-		System.out.println(toDo.shortToString());
-		
-		ToDoList todo2 = new ToDoList();
-		
-		
-		Save_Load s1 = new Save_Load();
-		
-				
-		Gson gson = new GsonBuilder()
-			    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-			    .create();		
-		
-		String json = gson.toJson(toDo);
-		
-		System.out.println(toDo.shortToString());
-		
-		System.out.println(todo2.shortToString());
 
 
-
-	}
-	
-	public static ToDoList testPopulate() {
-		Task task1, task2, task3, task4, task5, task6;
-		Person person1, person2, person3;
-		
-		LocalDate now = LocalDate.now();
-		LocalDate before = LocalDate.of(2022, 1, 4);
-		LocalDate after = LocalDate.of(2026, 5, 10);
-		
-		person1 = new Person();
-		person2 = new Person(41, "Jim Bonacci", "Acquaintance");
-		person3 = new Person(56, "Jack Ryan", "Father");
-		
-		
-		task1 = new Task();
-		task2 = new Task("Mow Lawn", "Mow the lawn", after, person3);
-		task3 = new Task("Moving", "Help with moving", now, person2);
-		task4 = new Task("Walk dog", "walk the dog", before, person1);
-		task5 = new Task("smthn", "idk lol", LocalDate.of(2025, 2, 2));
-		task6 = new Task("another thig", "texthere", person1);
-		
-
-		ArrayList<Task> allTasks = new ArrayList<Task>();
-		allTasks.add(task1);
-		allTasks.add(task2);
-		allTasks.add(task3);
-		allTasks.add(task4);
-		allTasks.add(task5);
-		allTasks.add(task6);
-		
-		ArrayList<Person> allPeople = new ArrayList<Person>();
-		allPeople.add(person1);
-		allPeople.add(person2);
-		allPeople.add(person3);
-		
-		
-		ToDoList toDo = new ToDoList(allTasks, allPeople);
-		
-		return toDo;
-		
-		
 	}
 
 }

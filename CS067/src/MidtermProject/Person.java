@@ -78,7 +78,8 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [getAge()=" + getAge() + ", getName()=" + getName() + ", getRelation()=" + getRelation() + "]";
+		String rVal = "Name: " + getName() + " | Age: " + String.valueOf(getAge()) + " | Relation: " + getRelation();
+		return rVal;
 	}
 	
 	public String toPrint() {
