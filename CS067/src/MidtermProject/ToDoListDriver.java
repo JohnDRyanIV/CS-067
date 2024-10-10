@@ -66,19 +66,21 @@ public class ToDoListDriver {
 					System.out.println("Invalid input. Try again.");
 					tempIntInput = in.nextInt() - 1;
 				}
-				toDo.removeTask(tempIntInput);
+				in.nextLine();
+				toDo.toggleComplete(tempIntInput);
 				sl.saveToDoList(toDo);
 			}
 			// Delete a task
 			else if (tempInput.equalsIgnoreCase("DT")) {
 				System.out.println(toDo.listAllTasks());
-				System.out.println("Select which number task you want deleted: " );
+				System.out.println("Select which number task you want to swap completion of: " );
 				tempIntInput = in.nextInt() - 1;		// subtracted by 1 cause user is shown list from 1-size
 													// whereas actual valid indices are 0-(size - 1)
 				while(!toDo.isValidTaskSelect(tempIntInput)) {
 					System.out.println("Invalid input. Try again.");
 					tempIntInput = in.nextInt() - 1;
 				}
+				in.nextLine();
 				toDo.removeTask(tempIntInput);
 				sl.saveToDoList(toDo);
 			}

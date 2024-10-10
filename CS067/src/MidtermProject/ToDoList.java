@@ -226,4 +226,9 @@ public class ToDoList {
 		return rVal;
 	}
 
+	public void toggleComplete(int i) {
+		tasks.get(i).toggleComplete();
+		
+	}
+
 }

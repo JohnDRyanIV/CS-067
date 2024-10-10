@@ -105,6 +105,7 @@ public class PromptController {
 					System.out.println("Invalid input. Try again");
 					tempInt = in.nextInt() - 1;
 				}
+				in.nextLine();
 				p = todo.getPerson(tempInt);		
 			}
 			// If no or no users, prompt user to manually add a person
