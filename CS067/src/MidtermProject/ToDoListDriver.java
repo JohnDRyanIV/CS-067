@@ -32,9 +32,7 @@ public class ToDoListDriver {
 		Scanner in = new Scanner(System.in);					// Scanner to scan for current user input
 		
 		PromptController prompt = new PromptController();		// Handles getting some input from user
-		
-		Task currentTask = null;								// Current task to be added to ToDoList
-		Person currentPerson = null;							// Current person to be added to PersonList
+
 		ToDoList toDo = null;
 		Save_Load sl = new Save_Load();						// Handles saving/loading todolist
 
@@ -63,15 +61,15 @@ public class ToDoListDriver {
 					+ "I - View Incomplete Tasks\n"
 					+ "V - View People\n"
 					+ " or z to end the program: ");
-			tempInput = in.next();
+			tempInput = in.nextLine();
 			// Add a task
 			if(tempInput.equalsIgnoreCase("A")) {
-				toDo.addTask(prompt.promptTask(in));
+				toDo.addTask(prompt.promptTask(in ,toDo));
 				sl.saveToDoList(toDo);
 			}
 			// Add a person
 			else if (tempInput.equalsIgnoreCase("P")) {
-				toDo.addPerson(prompt.promptPerson(in));
+				toDo.addPerson(prompt.promptPerson(in, toDo));
 			}
 			// Change completion status of task
 			else if (tempInput.equalsIgnoreCase("T")) {

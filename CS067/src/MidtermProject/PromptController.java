@@ -19,58 +19,104 @@ public class PromptController {
 
 	/**
 	 * Prompts the user to enter information that can be used to create a new Task object
-	 * @return
+	 * @return - New Task to be added to the 
 	 */
-	public Task promptTask(Scanner in) {
+	public Task promptTask(Scanner in, ToDoList todo) {
+		int tempInt = -1;
+		String tempInput = "";
 		String taskName = "";
 		String taskDescription = "";
 		String dueDateHolder = "";
 		LocalDate taskDueDate = null;
+		Task rTask = null;
+		Person p = null;
 		
+		// Enter the name of the task
 		System.out.println("Enter title of task: ");
-		taskName = in.next();
+		taskName = in.nextLine();
+		// Enter the description of the task
 		System.out.println("Enter description of task: ");
-		taskDescription = in.next();
+		taskDescription = in.nextLine();
+		// Enter date of the task, if asked for, otherwise date = null;
+		System.out.println("Do you want to enter a due date for the task (y/n)?: ");
+		tempInput = in.nextLine();
 		
-		System.out.println("Enter date of task (yyyy-mmm-dd), or press enter for no date: ");
-		dueDateHolder = in.next();
-		
-		while(taskDueDate == null) {
-			try {
-				// following code found here: https://stackoverflow.com/questions/8746084/string-to-localdate
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
-				formatter = formatter.withLocale(Locale.US);  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
-				taskDueDate = LocalDate.parse(dueDateHolder, formatter);
-			}
-			catch(Exception e) {
-				System.out.println("Error in entered date. Try again (yyyy-mmm-dd), or press enter for no date: ");
-				dueDateHolder = in.next();
+		while(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
+			System.out.println("Invalid input. Try again: ");
+			tempInput = in.nextLine();
+		}
+		if(tempInput.equalsIgnoreCase("y")) {
+			System.out.println("Enter date of task (yyyy-mmm-dd): ");
+			dueDateHolder = in.nextLine();
+			
+			while(taskDueDate == null) {
+				try {
+					// following code found here: https://stackoverflow.com/questions/8746084/string-to-localdate
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+					formatter = formatter.withLocale(Locale.US);  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
+					taskDueDate = LocalDate.parse(dueDateHolder, formatter);
+				}
+				catch(Exception e) {
+					System.out.println("Error in entered date. Try again (yyyy-mmm-dd): ");
+					dueDateHolder = in.nextLine();
+				}
 			}
 		}
+		
+		// Enter person either from existing list or create new person
+		if(todo.getNumPeople() > 0) { // Check to see if there exist people in persons list to choose from
+			System.out.println("Do you want to use an existing person (y/n)?");
+			tempInput = in.nextLine();
+			if(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
+				while(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
+					System.out.println("Invalid input. Try again.");
+					tempInput = in.nextLine();
+				}
+			}	
+		}
+		// If person list is empty, manually set tempinput to n so user will be prompted to enter new person
+		else {
+			tempInput = "n";
+		}
+		// If yes, then get list of existing people and choose which one to add
+		if(tempInput.equalsIgnoreCase("y")) {
+			System.out.println(todo.listAllPeople());
 
-		Person p = promptPerson(in);
+			System.out.println("Select a person: ");
+			tempInt = in.nextInt() - 1;
+			// Input validation
+			while(!todo.isValidPersonSelect(tempInt)) {
+				System.out.println("Invalid input. Try again");
+				tempInt = in.nextInt() - 1;
+			}
+					
+		}
+		// If no or no users, prompt user to manually add a person
+		else {
+			p = promptPerson(in, todo);
+		}
 		
 		if(taskDueDate != null) {
-			//TODO implement date finder
-			Task t = new Task(taskName, taskDescription, taskDueDate, p);
+			rTask = new Task(taskName, taskDescription, taskDueDate, p);
 		}
-		Task t = new Task(taskName, taskDescription, p);	
+		rTask = new Task(taskName, taskDescription, p);	
 		
-		return t;
+		return rTask;
 	}
 	
 	/**
 	 * Prompts the user to enter information that can be used to make a new person object
 	 * @return
 	 */
-	public Person promptPerson(Scanner in) {
+	public Person promptPerson(Scanner in, ToDoList todo) {
 		
+		String tempInput = "";
 		String personName = "";
 		int personAge = -1;
 		String personRelation = "";
-		
+			
 		System.out.println("Enter name of person: ");
-		personName = in.next();
+		personName = in.nextLine();
 		while(personAge < 0) {
 			System.out.println("Enter age of person: ");
 			personAge = in.nextInt();
@@ -79,13 +125,18 @@ public class PromptController {
 			}
 		} 
 		System.out.println("Enter relation to person: ");
-		personRelation = in.next();
-		
-		Person p = new Person(personAge, personName, personRelation);
+		personRelation = in.nextLine();
 			
+		Person p = new Person(personAge, personName, personRelation);
+		
 		return p;
 	}
 	
+	/**
+	 * Prompts the user as to what kind of method they want to use to sort the tasks in the ToDoList
+	 * @param in - Scanner
+	 * @return - String representing the type of sorting to be used
+	 */
 	public String promptSort(Scanner in) {
 		String rVal = "";
 		// found out how to do below code here: 
@@ -102,7 +153,7 @@ public class PromptController {
 					+ "A - Sort by Person Age\n"
 					+ "R - Sort by Relation to Person\n"
 					+ "I - Invert current sorting order");
-			rVal = in.next().toUpperCase();
+			rVal = in.nextLine().toUpperCase();
 			if(!validInputs.contains(rVal)) {
 				System.out.println("Invalid input. Try again.");
 			}

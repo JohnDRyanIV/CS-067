@@ -71,6 +71,10 @@ public class ToDoList {
 		return tasks;
 	}
 	
+	public Person getPerson(int i) {
+		return people.get(i);
+	}
+	
 	public String listCompleteTasks() {
 		String rVal = "";
 		int i = 1;	// Outputs the number of task on the completed list this is
