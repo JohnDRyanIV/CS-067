@@ -10,9 +10,11 @@ package MidtermProject;
  */
 public class Person {
 	
-	private int age;
-	private String name;
-	private String relation;
+	private int age;				// Age of person
+	private String name;			// Name of person
+	private String relation;		// Your relation to person
+	
+	//////////// Constructors ////////////////
 	
 	public Person() {
 		this.age = 25;
@@ -82,6 +84,7 @@ public class Person {
 		return rVal;
 	}
 	
+	// Returns just the person's name
 	public String toPrint() {
 		return this.getName();
 	}

@@ -8,6 +8,10 @@ package MidtermProject;
 import java.util.Comparator;
 
 
+/**
+ * This class consists of comparator overrides to sort task list by a lot of different variables
+ */
+
 class CompleteComparator implements Comparator<Task> {	
 	@Override
 	/**

@@ -5,19 +5,12 @@
  */
 package MidtermProject;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 /**
- * 
+ * Creatse
  */
 public class ToDoListDriver {
 	
@@ -35,15 +28,6 @@ public class ToDoListDriver {
 
 		ToDoList toDo = null;
 		Save_Load sl = new Save_Load();						// Handles saving/loading todolist
-
-		
-		
-		/**
-		 * Might implement below for file reading/writing
-		 * Scanner file = new Scanner(-FILEPATH-);
-		 */
-		
-		//toDo = testPopulate();
 		
 		toDo = sl.loadToDoList();
 		
@@ -70,6 +54,7 @@ public class ToDoListDriver {
 			// Add a person
 			else if (tempInput.equalsIgnoreCase("P")) {
 				toDo.addPerson(prompt.promptPerson(in, toDo));
+				sl.saveToDoList(toDo);
 			}
 			// Change completion status of task
 			else if (tempInput.equalsIgnoreCase("T")) {
@@ -129,7 +114,7 @@ public class ToDoListDriver {
 			else if (tempInput.equalsIgnoreCase("C")) {
 				System.out.println(toDo.listCompleteTasks());
 			}
-			// View iocomplete tasks
+			// View incomplete tasks
 			else if (tempInput.equalsIgnoreCase("I")) {
 				System.out.println(toDo.listIncompleteTasks());
 			}
@@ -137,6 +122,7 @@ public class ToDoListDriver {
 			else if(tempInput.equalsIgnoreCase("V")) {
 				System.out.println(toDo.listAllPeople());
 			}
+			// Catch invalid input
 			else if(!tempInput.equalsIgnoreCase("Z")) {
 				System.out.println("Invalid input. Try again.");
 			}
@@ -144,7 +130,8 @@ public class ToDoListDriver {
 		} while(!tempInput.equals(sentinelValue));
 		
 		in.close();
-
+		System.out.println(toDo.longToString());
+		System.out.println("Restart program to access ToDoList");
 
 	}
 

@@ -18,7 +18,7 @@ public class Task {
 	private LocalDate dueDate;	// Due Date of task
 	private Person person;		// Person involved with task
 		
-	// Constructors
+	// Constructors (fields explained in private variables)
 	
 	Task() {
 		name = "Generic Task";
@@ -63,20 +63,21 @@ public class Task {
 	public String toString() {
 		
 		String rVal = "";
-			rVal = getName() + " | " + printComplete() + "\n" + getDescription() + "\n";
-			if(hasDueDate()) {
-				rVal += " " + getDueDate().toString();
-			}
-			if(hasPerson()) {
-				rVal += " " + getPerson().toString();
-			}
+		rVal = getName() + " | " + getDescription() + " | ";
+		if(hasDueDate()) {
+			rVal += getDueDate().toString() + " | ";
+		}
+		if(hasPerson()) {
+			rVal += " " + getPerson().toString() + " | ";
+		}
+		rVal += printComplete() + "\n";
+		rVal += getDescription();
 		return rVal;
 	}
 	
 	public void toggleComplete() {
 		complete = !complete;
 	}
-	
 	
 	/**
 	 * Returns a short string representing a task
@@ -138,6 +139,9 @@ public class Task {
 		
 	}
 	
+	/**
+	 * @return - True if Task has a due date, false otherwise
+	 */
 	public boolean hasDueDate() {
 		return getDueDate() != null;
 	}

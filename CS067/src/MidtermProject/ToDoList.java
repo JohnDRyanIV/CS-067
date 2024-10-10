@@ -7,15 +7,16 @@ package MidtermProject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 /**
- * 
+ * A to do list that contains Task and Person objects. Many operations can be performed on this object
  */
 public class ToDoList {
 	
-	private ArrayList<Task> tasks;
-	private ArrayList<Person> people;
+	private ArrayList<Task> tasks;		// ArrayList containing Task objects
+	private ArrayList<Person> people;	// ArrayList containing Person objects
+	
+	////// Constructors ///////
 	
 	public ToDoList() {
 		tasks = new ArrayList<Task>();
@@ -40,13 +41,17 @@ public class ToDoList {
 	}
 	
 	/**
-	 * Adds a Task to the ToDoList object
-	 * @param newTask - Task to be added to the ToDoList object
+	 * Adds a Task object to the tasks ArrayList
+	 * @param newTask - Task to be added to the ToDoList
 	 */
 	public void addTask(Task newTask) {
 		tasks.add(newTask);
 	}
 	
+	/**
+	 * Adds a Person object to the people ArrayList
+	 * @param newPerson - Person to be added to people ArrayList
+	 */
 	public void addPerson(Person newPerson) {
 		people.add(newPerson);
 	}
@@ -63,18 +68,36 @@ public class ToDoList {
 		tasks.remove(i);
 	}
 	
+	/**
+	 * Returns the task at index i of tasks
+	 * @param i - index of task to be returned
+	 * @return - task at index i
+	 */
 	public Task getTask(int i) {
 		return tasks.get(i);
 	}
 	
+	/**
+	 * Returns the entire arrayList of tasks
+	 * @return - ArrayList tasks
+	 */
 	public ArrayList<Task> getTasks() {
 		return tasks;
 	}
 	
+	/**
+	 * Returns the person at index i of people
+	 * @param i - index of person to be returned
+	 * @return - person at index i
+	 */
 	public Person getPerson(int i) {
 		return people.get(i);
 	}
 	
+	/**
+	 * Compiles string of all complete tasks in short-form
+	 * @return - string of all completed tasks in short-form
+	 */
 	public String listCompleteTasks() {
 		String rVal = "";
 		int i = 1;	// Outputs the number of task on the completed list this is
@@ -90,6 +113,9 @@ public class ToDoList {
 		return rVal;
 	}
 	
+	/**
+	 * @return - String of all incomplete tasks in short-form
+	 */
 	public String listIncompleteTasks() {
 		String rVal = "";
 		int i = 1;	// Outputs the number of task on the incomplete list this is
@@ -104,6 +130,9 @@ public class ToDoList {
 		return rVal;
 	}
 	
+	/**
+	 * @return - String that lists all tasks in short-form
+	 */
 	public String listAllTasks() {
 		String rVal = "";
 		int i = 1;
@@ -115,6 +144,9 @@ public class ToDoList {
 		return rVal;
 	}
 	
+	/**
+	 * @return - String that lists all Person objects in people
+	 */
 	public String listAllPeople() {
 		String rVal = "";
 		int i = 1;
@@ -126,14 +158,25 @@ public class ToDoList {
 		return rVal;
 	}
 	
+	/**
+	 * @return - size of ArrayList tasks
+	 */
 	public int getNumTasks() {
 		return tasks.size();
 	}
 	
+	/**
+	 * @return - size of ArrayList people
+	 */
 	public int getNumPeople() {
 		return people.size();
 	}
 	
+	/**
+	 * Checks if the selected index taskNum of ArrayList tasks is a valid index
+	 * @param taskNum - Index of tasks attempting to be accessed
+	 * @return - true if index exists in tasks, false otherwise
+	 */
 	public boolean isValidTaskSelect(int taskNum) {		
 		if(taskNum > -1 && taskNum < tasks.size()) {
 			return true;
@@ -141,6 +184,11 @@ public class ToDoList {
 		return false;
 	}
 	
+	/**
+	 * Checks if the selected index personNum of ArrayList people is a valid index
+	 * @param personNum - Index of people attempting to be accessed
+	 * @return - true if index exists in people, false otherwise
+	 */
 	public boolean isValidPersonSelect(int personNum) {
 		if(personNum > -1 && personNum < people.size()) {
 			return true;
@@ -149,12 +197,29 @@ public class ToDoList {
 		
 	}
 	
-	
+	/**
+	 * Returns a shorthand representation of the ToDoList for easy modification
+	 * @return - String representing shorthand form of ToDoList
+	 */
 	public String shortToString() {
 		int taskNum = 1;
 		String rVal = "";
 		for(Task t : tasks) {
 			rVal += String.valueOf(taskNum) + ": " + t.shortToString() + "\n";
+			taskNum++;
+		}
+		
+		return rVal;
+	}
+	
+	/**
+	 * @return - Verbose toString of all Task objects for later reference by user at end of program
+	 */
+	public String longToString() {
+		int taskNum = 1;
+		String rVal = "List of Tasks:\n";
+		for(Task t : tasks) {
+			rVal += String.valueOf(taskNum) + t + "\n";
 			taskNum++;
 		}
 		

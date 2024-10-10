@@ -13,13 +13,13 @@ import java.util.Locale;
 import java.util.Scanner;
 
 /**
- * 
+ * Handles a lot of prompting for and receiving inputs from the user.
  */
 public class PromptController {
 
 	/**
 	 * Prompts the user to enter information that can be used to create a new Task object
-	 * @return - New Task to be added to the 
+	 * @return - New task created by user through console
 	 */
 	public Task promptTask(Scanner in, ToDoList todo) {
 		int tempInt = -1;
@@ -40,29 +40,33 @@ public class PromptController {
 		// Enter date of the task, if asked for, otherwise date = null;
 		System.out.println("Do you want to enter a due date for the task (y/n)?: ");
 		tempInput = in.nextLine();
-		
+		// Input validation
 		while(!tempInput.equalsIgnoreCase("y") && !tempInput.equalsIgnoreCase("n")) {
 			System.out.println("Invalid input. Try again: ");
 			tempInput = in.nextLine();
 		}
+		// If date is added
 		if(tempInput.equalsIgnoreCase("y")) {
-			System.out.println("Enter date of task (yyyy-mmm-dd): ");
+			System.out.println("Enter date of task (yyyy-mm-dd): ");
 			dueDateHolder = in.nextLine();
 			
 			while(taskDueDate == null) {
 				try {
 					// following code found here: https://stackoverflow.com/questions/8746084/string-to-localdate
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
-					formatter = formatter.withLocale(Locale.US);  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					formatter = formatter.withLocale(Locale.US);  
+					// Locale specifies human language for translating, and cultural norms for lowercase/uppercase 
+					// and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
 					taskDueDate = LocalDate.parse(dueDateHolder, formatter);
 				}
 				catch(Exception e) {
-					System.out.println("Error in entered date. Try again (yyyy-mmm-dd): ");
+					System.out.println("Error in entered date. Try again (yyyy-mm-dd): ");
 					dueDateHolder = in.nextLine();
 				}
 			}
 		}
 		
+		tempInput = "";
 		// Enter person either from existing list or create new person
 		if(todo.getNumPeople() > 0) { // Check to see if there exist people in persons list to choose from
 			System.out.println("Do you want to use an existing person (y/n)?");
@@ -89,7 +93,7 @@ public class PromptController {
 				System.out.println("Invalid input. Try again");
 				tempInt = in.nextInt() - 1;
 			}
-					
+			p = todo.getPerson(tempInt);		
 		}
 		// If no or no users, prompt user to manually add a person
 		else {
@@ -106,11 +110,10 @@ public class PromptController {
 	
 	/**
 	 * Prompts the user to enter information that can be used to make a new person object
-	 * @return
+	 * @return - Person object created by user
 	 */
 	public Person promptPerson(Scanner in, ToDoList todo) {
 		
-		String tempInput = "";
 		String personName = "";
 		int personAge = -1;
 		String personRelation = "";
