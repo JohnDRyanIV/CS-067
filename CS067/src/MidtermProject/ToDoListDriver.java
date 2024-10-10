@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 /**
  * 
  */
@@ -114,6 +117,22 @@ public class ToDoListDriver {
 		
 		Collections.sort(toDo.getTasks(), new PersonNameComparator());
 		System.out.println(toDo.shortToString());
+		
+		ToDoList todo2 = new ToDoList();
+		
+		
+		Save_Load s1 = new Save_Load();
+		
+				
+		Gson gson = new GsonBuilder()
+			    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+			    .create();		
+		
+		String json = gson.toJson(toDo);
+		
+		System.out.println(toDo.shortToString());
+		
+		System.out.println(todo2.shortToString());
 
 
 

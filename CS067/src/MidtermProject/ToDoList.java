@@ -62,7 +62,7 @@ public class ToDoList {
 	}
 	
 	public Task getTask(int i) {
-		return null;   // TODO TODO TODO TODO  TODO 
+		return tasks.get(i);
 	}
 	
 	public ArrayList<Task> getTasks() {
