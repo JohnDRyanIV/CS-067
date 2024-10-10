@@ -8,11 +8,13 @@ package Week7;
 public class PersonDriver {
     
     public static void main(String[] args) {
-        Person p1 = new Person("Alexa", 12);
-        System.out.println(p1);
+        Person gus = new Person("Gus",1976,9,15);
+        Person jill = new Student("Jill",2004,3,9,3.9);
 
-        Student s1 = new Student("Gus", 23, 2.3);
-        System.out.println(s1);
+        //Student myStudent = new Person("Jill",2004,3,9);
+
+        System.out.println(gus);
+        System.out.println(jill);
     }
 
 }

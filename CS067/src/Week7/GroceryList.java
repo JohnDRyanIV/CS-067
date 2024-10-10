@@ -24,7 +24,7 @@ public class GroceryList extends ArrayList<GroceryItem>
 
     // the @Override annotation tells the compiler we intend to override
     // the add method from ArrayList
-    /* 
+    
     @Override
     public boolean add(GroceryItem item) {
 
@@ -38,5 +38,5 @@ public class GroceryList extends ArrayList<GroceryItem>
         // Call the parent class's add method to actually add the item
         return super.add(item); 
     }
-    */
+    
 }

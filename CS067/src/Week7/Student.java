@@ -6,32 +6,32 @@
 package Week7;
 
 public class Student extends Person {
+
     private double gpa;
 
-    public Student(String n, int a, double g) {
-        super(n,a);
+    /**
+     * Constructor for a Student
+     *
+     * @param n , String for the name
+     * @param m , String for the month for birthday
+     * @param d , int for day for birthday
+     * @param y ,  int for year for birthday
+     * @param g ,  double for gpa
+     */
+    public Student(String n, int y, int m, int d, double g) {
+        super(n,y,m,d);
         gpa = g;
     }
-
-    public void setGPA(double g) {
-        gpa = g;
-    }
-
-    public double getGPA() {
-        return gpa;
-    }
-
-    public void study() {
-        gpa += 0.1;
-    }
-
-    public String toString() {
+    
+    /**
+     * @return String representation of a Student 
+     */
+    public String toString(){ 
         String returnString = "";
         returnString += "STUDENT\n";
-        returnString += "  name: " + getName() + "\n";
+        returnString += "  name: " + name + "\n";
         returnString += "  age: " + getAge() + "\n";
         returnString += "  gpa: " + gpa + "\n";
         return returnString;
     }
-
 }
