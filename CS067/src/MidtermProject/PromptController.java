@@ -172,7 +172,7 @@ public class PromptController {
 		// found out how to do below code here: 
 		// https://howtodoinjava.com/java/collections/arraylist/add-multiple-elements-arraylist/
 		ArrayList<String> validInputs = 
-				new ArrayList<>(Arrays.asList("C", "D", "N", "DD", "PN", "A", "R", "I"));
+				new ArrayList<>(Arrays.asList("C", "TD", "N", "DD", "PN", "A", "R", "I"));
 		do {
 			System.out.println("How do you wish to sort the task list?\n"
 					+ "C - Sort by Complete\n"
