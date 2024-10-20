@@ -21,7 +21,7 @@ public class PersonHierarchyDriver {
 		Professor pr1 = new DistinguishedProfessor("Bob", "Geology", 1955, 9, 3);
 		
 		// Why doesn't this line work?
-		Student s1 = new Professor("Carly", "Physics", 1995, 1, 31);
+		/** Student s1 = new Professor("Carly", "Physics", 1995, 1, 31);
 		
 		// Why doesn't this line work?
 		DistinguishedProfessor dp1 = new Professor("Donald", "Literature", 1976, 6, 12);
@@ -41,6 +41,8 @@ public class PersonHierarchyDriver {
 		// Okay, this works. But which version of the display()
 		// method was called: Professor's display method or
 		// DProfessor display method? Why?
+		 *
+		 */
 	}
 
 }
