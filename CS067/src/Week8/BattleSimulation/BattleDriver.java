@@ -10,8 +10,8 @@ public class BattleDriver
         Axe axe = new Axe("IOAxeption");
         monster.equipWeapon(axe);
 
-        System.out.print("BATTLE!!!");
-        System.out.print(hero+" vs. "+monster);
+        System.out.print("BATTLE!!!\n");
+        System.out.print(hero+" vs. "+monster + "\n");
 
         while(hero.isAlive() && monster.isAlive())
         {

@@ -28,7 +28,7 @@ class DescriptionComparator implements Comparator<Task> {
 	 * Sorts tasks based on their description, ascending.
 	 */
 	public int compare(Task o1, Task o2) {
-		return o1.getDescription().compareTo(o2.getDescription());
+		return o1.getDescription().toLowerCase().compareTo(o2.getDescription().toLowerCase());
 	}
 	
 }
