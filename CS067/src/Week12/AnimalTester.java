@@ -5,38 +5,40 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class AnimalTester {
-
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+	Animal a = new Animal();
 	
 	@Test
 	public void validAnimalTest() {
-		Animal a = new Animal();
-		assertTrue(a.isValidType("Snake"));
-		assertFalse(a.isValidType("Cat"));
-		// https://www.baeldung.com/junit-assert-exception
+		String validTypes[] = {"lion", "bear", "giraffe", "tiger", "snake", "monkey"};
+		String invalidTypes[] = {"cougar", "whale", "anenome", "florida man"};
+		for(String s : validTypes) {
+			assertTrue(a.isValidType(s));
+		}
+		for(String s : invalidTypes) {
+			assertFalse(a.isValidType(s));
+		}
+	}
+	
+	@Test(expected = ImproperAnimalTypeException.class)
+	public void improperAnimalTypeExceptionTest() {
+		Animal b = new Animal(160, "Lorko", "koala");
 	}
 	
 	@Test
-	public void invalidAnimalTest() {
-		
+	public void validWeightTest() {
+		double validWeights[] = {0.1, 600, 1000, 5000, 20};
+		double invalidWeights[] = {0, 10000000, -500};
+		for(double d : validWeights) {
+			assertTrue(a.isValidWeight(d));
+		}
+		for(double d : invalidWeights) {
+			assertFalse(a.isValidWeight(d));
+		}
 	}
 	
-	@Test
-	public void changeInvalidToValidAnimalTest() {
-		
-	}
-	
-	@Test
-	public void isValidWeightTest() {
-		
-	}
-	
-	@Test
-	public void isInvalidWeightTest() {
-		
+	@Test(expected = ImproperAnimalWeightException.class)
+	public void improperAnimalWeightExceptionTest() {
+		Animal b = new Animal(-50, "jim", "giraffe");
 	}
 
 }
