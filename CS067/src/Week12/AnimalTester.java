@@ -1,3 +1,9 @@
+/**
+ * @author John Ryan - john.ryan@drake.edu
+ * CS 067 - Fall 2024
+ * Nov 14, 2024
+ */
+
 package Week12;
 
 import static org.junit.Assert.*;
