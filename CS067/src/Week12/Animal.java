@@ -19,21 +19,17 @@ public class Animal {
 	}
 	
 	Animal(double  w, String n, String t) throws ImproperAnimalTypeException, ImproperAnimalWeightException {
-		
+		// Checking that weight is valid integer
 		if(!isValidWeight(w)) {
-			weight = -999;
 			throw new ImproperAnimalWeightException(w);
+		}
+		// Checking that type is valid string
+		else if (!isValidType(t)) {
+			throw new ImproperAnimalTypeException(t);
 		}
 		weight = w;
 		name = n;
-		// Checking that the type of animal is valid for the zoo
-		if(!isValidType(t)) {
-			type = "invalidType";
-			throw new ImproperAnimalTypeException(t);
-		}
-		else {
-			type = t;
-		}
+		type = t;
 	}
 	
 	/**
@@ -54,27 +50,6 @@ public class Animal {
 			return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * Can change the type of animal if the originally constructed animal was an invalid type
-	 * @param t - String representing type of animal
-	 * @throws ImproperAnimalTypeException - Thrown if type that animal is being changed to is invalid
-	 */
-	public void changeType(String t) throws ImproperAnimalTypeException {
-		// Checking that the current type is invalid
-		if(type.equals("invalidType"))
-			// Checking that the type of animal is valid for the zoo
-			if(!isValidType(t)) {
-				type = "invalidType";
-				throw new ImproperAnimalTypeException(t);
-			}
-			else {
-				type = t;
-			}
-		else {
-			System.out.println("You can't change a type of animal if it is already valid!");
-		}
 	}
 	
 	/**
